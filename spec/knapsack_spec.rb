@@ -4,12 +4,28 @@ require_relative '../lib/knapsack'
 RSpec.describe 'Knapsack' do
   describe 'Knapsack' do
     it 'run algoritm' do
-      mass = [1, 4, 5, 7]
-      value = [1, 5, 7, 9]
-      capacity = 11
-      problem = Knapsack.new(capacity, mass, value)
-      expect(problem.run_algorithm).to eq(14)
-      expect(problem.find_selected_items).to eq([4, 2])
+      items = [
+        {weight: 1, price: 1},
+        {weight: 4, price: 5},
+        {weight: 5, price: 7},
+        {weight: 7, price: 9}
+      ]
+      problem = Knapsack.new(items)
+      expect(problem.fill_the_bag(11)).to eq(14)
+      expect(problem.inside_bag).to eq([
+        {weight: 7, price: 9},
+        {weight: 4, price: 5}])
+      expect(problem.fill_the_bag(18)).to eq(22)
+      expect(problem.inside_bag).to eq([
+        {weight: 7, price: 9},
+        {weight: 5, price: 7},
+        {weight: 4, price: 5},
+        {weight: 1, price: 1}])
+      expect(problem.fill_the_bag(6)).to eq(8)
+      expect(problem.inside_bag).to eq([
+        {weight: 5, price: 7},
+        {weight: 1, price: 1}
+      ])
     end
   end
 end
